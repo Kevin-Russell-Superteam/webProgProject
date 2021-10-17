@@ -31,3 +31,64 @@
     grid-template-columns: repeat(4, 1fr);
     justify-items: center;
 }
+
+
+/* Login */
+.wrapper-content{
+    display: flex;
+    padding-top: 2em;
+}
+
+.wrapper-menu{
+    width: 50%;
+}
+
+.component {
+    display: flex;
+    justify-content: space-between;
+}
+
+.forgot>a{
+    color: black;
+}
+
+.content-login{
+    width: 50%;
+    margin: auto;
+    padding: 20px 0;
+}
+
+.sub-heading>h1{
+    text-align: center;
+}
+
+.btn-primary {
+    width: 40%;
+}
+
+.line {
+    border-left: 2px solid #d6d6d7;
+
+}
+
+.register {
+    position: relative;
+    margin: auto;
+}
+
+/* Register */
+
+.wrapper-register{
+    width: 30%;
+    margin: auto;
+    padding-top: 2em;
+    position: relative;
+}
+
+.full-name{
+    display: flex;
+}
+
+.space {
+    width: 5%;
+}
