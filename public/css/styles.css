@@ -30,4 +30,27 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     justify-items: center;
+    gap: 0;
+}
+
+.product {
+    cursor: pointer;
+}
+
+.product img {
+    background: #f6f6f4;
+    padding: 4em;
+}
+
+.product .product-desc {
+    margin-top: 1em;
+}
+
+.product .product-desc h2 {
+    font-size: 1.5rem;
+}
+
+.product .product-desc h4 {
+    color: gray;
+    font-size: 1.1rem;
 }
