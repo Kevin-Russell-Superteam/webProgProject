@@ -8,13 +8,13 @@
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav me-3">
         <li class="nav-item me-3">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a class="nav-link active" aria-current="page" href="{{ '/' }}">Home</a>
         </li>
         <li class="nav-item me-3">
           <a class="nav-link" href="#">Shop</a>
         </li>
         <li class="nav-item me-3">
-          <a class="nav-link" href="#">Login</a>
+          <a class="nav-link" href="{{ '/login' }}">Login</a>
         </li>
       </ul>
     </div>

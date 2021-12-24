@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\ItemController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,14 +16,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-<<<<<<< HEAD
-    return view('guesthome');
-});
+Route::get('/', [ItemController::class, 'index']);
 
 Route::get('/user', function () {
     return view('userhome');
-=======
-    return view('register');
->>>>>>> e82dd0e4c44bdd67f73ddafbe6eb61087d8258f1
 });
+
+Route::get('/login', [LoginController::class, 'index']);
+
+Route::get('/register', [RegisterController::class, 'index']);
+
+Route::post('/register', [RegisterController::class, 'store']);
