@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 
 class LoginController extends Controller
 {
@@ -11,5 +13,42 @@ class LoginController extends Controller
         return view('login', [
             'pageTitle' => "Login"
         ]);
+    }
+
+    public function authenticate(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => 'required|email:dns',
+            'password' => 'required'
+        ]);
+
+        if ($request->remember) {
+            //Test 2 menit dulu
+            Cookie::queue('emailCookie', $request->email, 2);
+            Cookie::queue('passwordCookie',  $request->password, 2);
+        }
+
+        if (Auth::attempt($credentials)) {
+            if ($request->email === 'admin@gmail.com') {
+                $request->session()->regenerate();
+                return redirect()->intended('/admin');
+            }
+
+            $request->session()->regenerate();
+            return redirect()->intended('/user');
+        }
+
+        return back()->with('loginErrorMessage', 'Login failed, please try again!');
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/')->with('logoutMessage', 'You are logged out.');
     }
 }

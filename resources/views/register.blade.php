@@ -1,4 +1,4 @@
-@extends('layouts/main')
+@extends('layouts.guest')
 @section('container')
 
 <div class="wrapper-register">
