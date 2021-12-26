@@ -17,10 +17,10 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('usersID');
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('password', 5, 20);
+            $table->text('password', 5, 20);
             $table->text('address', 5, 95);
             $table->string('gender', 10);
-            $table->boolean('isAdmin')->default(false);
+            $table->string('role')->default('Member');
             $table->rememberToken();
             $table->timestamps();
         });

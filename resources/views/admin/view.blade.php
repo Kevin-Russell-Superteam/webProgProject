@@ -1,21 +1,18 @@
-@extends('layouts.guest')
-
+@extends('layouts.admin')
 @section('container')
-<section id="hero">
-  <div class="main-title">
-    <h1>Build your dream house with us</h1>
-  </div>
-</section>
 
 <section id="products">
   <div class="container">
-    @if (session()->has('logoutMessage'))
-    <div class="alert alert-secondary alert-dismissible fade show" role="alert">
-      {{ session('logoutMessage') }}
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <h2 class="text-center mb-5">View Furniture</h2>
+
+    <div class="searchbar d-flex justify-content-end mb-5">
+      <form class="d-flex" action="/search" method="post">
+        @csrf
+        <input class="form-control me-2" type="search" placeholder="Search by furniture's name" aria-label="Search">
+        <button class="btn btn-primary" type="submit">Search</button>
+      </form>
     </div>
-    @endif
-    <h2>Best Sellers</h2>
+
     <div class="row justify-content-between">
       <div class="col-md-3 mb-3">
         <div class="card">

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
@@ -16,17 +18,25 @@ class RegisterController extends Controller
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
+        $user = new User();
+
+        Validator::make($request->all(), [
             'name' => ['required', 'unique:users', 'regex:/^[a-zA-Z\s]*$/'],
             'email' => ['required', 'email:dns', 'unique:users'],
             'password' => ['required', 'min:5', 'max:20'],
             'address' => ['required', 'min:5', 'max:95'],
             'gender' => ['required']
-        ]);
+        ])->validate();
 
-        User::create($validatedData);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = $request->password;
+        $user->address = $request->address;
+        $user->gender = $request->gender;
 
-        // $request->session()->flash('success', 'Registration successful. Please login');
+        $user->password = Hash::make($user->password);
+
+        $user->save();
 
         return redirect('/login')->with('message', 'Registration successful!');
     }

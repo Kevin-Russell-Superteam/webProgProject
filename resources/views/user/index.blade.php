@@ -1,4 +1,4 @@
-@extends('layouts.guest')
+@extends('layouts.user')
 
 @section('container')
 <section id="hero">
@@ -9,12 +9,6 @@
 
 <section id="products">
   <div class="container">
-    @if (session()->has('logoutMessage'))
-    <div class="alert alert-secondary alert-dismissible fade show" role="alert">
-      {{ session('logoutMessage') }}
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    @endif
     <h2>Best Sellers</h2>
     <div class="row justify-content-between">
       <div class="col-md-3 mb-3">
@@ -62,10 +56,6 @@
       </div>
     </div>
   </div>
-
 </section>
-
-
-
 </section>
 @endsection
