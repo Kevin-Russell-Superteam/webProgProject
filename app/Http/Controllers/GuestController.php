@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Item;
 
 class GuestController extends Controller
 {
@@ -15,8 +16,10 @@ class GuestController extends Controller
 
     public function view()
     {
+        $Item = Item::all();
         return view('view', [
-            'pageTitle' => "View Furniture"
+            'pageTitle' => "View Furniture",
+            'items' => $Item
         ]);
     }
 }

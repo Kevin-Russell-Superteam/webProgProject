@@ -40,3 +40,7 @@ Route::get('/user/profile/update', [UserController::class, 'update'])->middlewar
 Route::get('/admin', [AdminController::class, 'index'])->middleware('admin');
 Route::get('/admin/view', [AdminController::class, 'view'])->middleware('admin');
 Route::get('/admin/profile', [AdminController::class, 'profile'])->middleware('admin');
+Route::get('/admin/addItem', [AdminController::class, 'viewAddItem']);
+Route::post('/addItem', [AdminController::class, 'addItem']);
+
+
