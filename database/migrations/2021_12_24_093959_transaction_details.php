@@ -13,17 +13,15 @@ class TransactionDetails extends Migration
      */
     public function up()
     {
-        Schema::create('transactionDetails', function(Blueprint $table){
-            $table->bigInteger('transactionsID')->unsigned();
+        Schema::create('transactionDetails', function (Blueprint $table) {
+            $table->bigInteger('transactionID')->unsigned();
             // $table->foreignID('transactionsID');
-            $table->bigInteger('usersID')->unsigned();
+            $table->bigInteger('userID')->unsigned();
             // $table->foreignId('userID');
-            $table->primary(['transactionsID', 'usersID']);
+            $table->primary(['transactionID', 'userID']);
             $table->integer('quantity');
-            $table->foreign('transactionsID')->references('transactionsID')->on('transactions')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('usersID')->references('usersID')->on('users');
-
-            
+            $table->foreign('transactionID')->references('id')->on('transactions')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('userID')->references('id')->on('users');
         });
     }
 

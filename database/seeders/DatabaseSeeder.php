@@ -14,10 +14,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-<<<<<<< HEAD
-        // \App\Models\User::factory(10)->create();
-        $this->call(ItemSeeder::class);
-=======
+        // $this->call(ItemSeeder::class);
+
         User::create([
             'name' => "Russell",
             "email" => "russell@gmail.com",
@@ -34,6 +32,5 @@ class DatabaseSeeder extends Seeder
             "gender" => "Male",
             "role" => "Admin"
         ]);
->>>>>>> c2c360f57b1357e14b91e8dd24403e22ee24123e
     }
 }

@@ -1,8 +1,8 @@
-@extends('layouts.user')
+@extends('layouts.admin')
 
 @section('container')
 <div class="wrapper-update-profile">
-  <form action="/user/profile/update" method="POST">
+  <form action="/admin/profile/update" method="POST">
     @csrf
     <div class="mb-3 sub-heading">
       <h1>Update Profile</h1>
@@ -41,36 +41,7 @@
       @enderror
     </div>
 
-    <div class="mb-3">
-      <label for="address" class="form-label">Address</label>
-      <textarea class="form-control @error('address') is-invalid @enderror" id="address" name="address"
-        rows="3">{{ old('address', Auth::user()->address) }}</textarea>
-      @error('address')
-      <div class="invalid-feedback">
-        {{ $message }}
-      </div>
-      @enderror
-    </div>
-
-    <div class="mb-3">
-      <label for="gender" class="form-label pe-3">Gender</label>
-
-      <input class="form-check-input @error('gender') is-invalid @enderror" type="radio" name="gender" id="gender"
-        value="Male">
-      <label class="form-check-label pe-3" for="gender">Male</label>
-
-      <input class="form-check-input @error('gender') is-invalid @enderror" type="radio" name="gender" id="gender"
-        value="Female">
-      <label class=" form-check-label" for="gender">Female</label>
-      @error('gender')
-      <div class="invalid-feedback">
-        {{ $message }}
-      </div>
-      @enderror
-    </div>
-
     <button type="submit" class="btn btn-primary w-100">Update Profile</button>
   </form>
 </div>
-
 @endsection

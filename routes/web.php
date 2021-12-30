@@ -34,9 +34,12 @@ Route::get('/view', [GuestController::class, 'view']);
 Route::get('/user', [UserController::class, 'index'])->middleware('auth');
 Route::get('/user/view', [UserController::class, 'view'])->middleware('auth');
 Route::get('/user/profile', [UserController::class, 'profile'])->middleware('auth');
-Route::get('/user/profile/update', [UserController::class, 'update'])->middleware('auth');
+Route::get('/user/profile/update', [UserController::class, 'updatePage'])->middleware('auth');
+Route::post('/user/profile/update', [UserController::class, 'updateProfile']);
 
 //Admin
 Route::get('/admin', [AdminController::class, 'index'])->middleware('admin');
 Route::get('/admin/view', [AdminController::class, 'view'])->middleware('admin');
 Route::get('/admin/profile', [AdminController::class, 'profile'])->middleware('admin');
+Route::get('/admin/profile/update', [AdminController::class, 'updatePage'])->middleware('admin');
+Route::post('/admin/profile/update', [AdminController::class, 'updateProfile']);

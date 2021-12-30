@@ -26,12 +26,6 @@
     margin-top: 2em;
 }
 
-/* #products .grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    margin: 0 auto;
-} */
-
 .product {
     cursor: pointer;
 }
@@ -96,9 +90,9 @@
     margin: auto;
 }
 
-/* Register */
-
-.wrapper-register {
+/* Register & Update Profile */
+.wrapper-register,
+.wrapper-update-profile {
     width: 30%;
     margin: auto;
     padding-top: 2em;
