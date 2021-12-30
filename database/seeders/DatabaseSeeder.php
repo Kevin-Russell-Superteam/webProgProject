@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(ItemSeeder::class);
+        $this->call(ItemSeeder::class);
 
         User::create([
             'name' => "Russell",

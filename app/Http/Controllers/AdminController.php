@@ -9,6 +9,8 @@ use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Item;
+use Illuminate\support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -61,5 +63,34 @@ class AdminController extends Controller
         $user->save();
 
         return redirect('/admin/profile')->with('updateMessage', 'Your data has been updated!');
+    }
+
+    public function viewAddItem()
+    {
+        $newItem = Item::all();
+        return view('/admin/addItem', [
+            'pageTitle' => 'Add Item'
+        ]);
+    }
+
+    public function addItem(Request $request)
+    {
+
+        $storeImage = $request->file('ItemImage');
+
+        $ImageName = $storeImage->getClientOriginalName();
+        Storage::putFileAs('public/images', $storeImage, $ImageName);
+        $ImageName = 'images/' . $ImageName;
+
+        $newItem = new Item();
+        $newItem->name = $request->ItemName;
+        $newItem->price = $request->ItemPrice;
+        $newItem->type = $request->ItemType;
+        $newItem->color = $request->ItemColor;
+        $newItem->image = $ImageName;
+
+        $newItem->save();
+
+        return 'Furniture Succesfully Added!';
     }
 }
