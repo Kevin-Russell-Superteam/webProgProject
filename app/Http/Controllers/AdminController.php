@@ -17,14 +17,16 @@ class AdminController extends Controller
     public function index()
     {
         return view('admin.index', [
-            'pageTitle' => "Admin Home"
+            'pageTitle' => "Admin Home",
+            'items' => Item::paginate(4)
         ]);
     }
 
     public function view()
     {
         return view('admin.view', [
-            'pageTitle' => "View Furniture"
+            'pageTitle' => "View Furniture",
+            'items' => Item::paginate(4)
         ]);
     }
 
@@ -35,9 +37,9 @@ class AdminController extends Controller
         ]);
     }
 
-    public function updatePage()
+    public function updateProfilePage()
     {
-        return view('admin.update', [
+        return view('admin.updateProfile', [
             'pageTitle' => 'Update Profile'
         ]);
     }
@@ -75,7 +77,6 @@ class AdminController extends Controller
 
     public function addItem(Request $request)
     {
-
         $storeImage = $request->file('ItemImage');
 
         $ImageName = $storeImage->getClientOriginalName();
@@ -92,5 +93,22 @@ class AdminController extends Controller
         $newItem->save();
 
         return 'Furniture Succesfully Added!';
+    }
+
+    public function search(Request $request)
+    {
+        $item = Item::where('name', 'like', '%' . $request->searchQuery . '%')->get();
+        return view('admin.view', [
+            "pageTitle" => "View Furniture",
+            "items" => $item
+        ]);
+    }
+
+    public function itemDetail(Item $item)
+    {
+        return view('admin.detail', [
+            "pageTitle" => $item->name,
+            "item" => $item
+        ]);
     }
 }

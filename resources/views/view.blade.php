@@ -12,7 +12,7 @@
         <button class="btn btn-primary" type="submit">Search</button>
       </form>
     </div>
-    
+
     <div class="row justify-content-start">
       @foreach ($items as $item)
       <div class="col-md-3 mb-3">
@@ -26,6 +26,9 @@
         </div>
       </div>
       @endforeach
+    </div>
+    <div class="d-flex justify-content-end">
+      {{ $items->links() }}
     </div>
   </div>
 

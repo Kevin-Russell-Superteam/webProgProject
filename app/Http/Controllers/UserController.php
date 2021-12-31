@@ -2,27 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Item;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
     public function index()
     {
         return view('user.index', [
-            "pageTitle" => "Home"
+            "pageTitle" => "Home",
+            'items' => Item::paginate(4)
         ]);
     }
 
     public function view()
     {
         return view('user.view', [
-            "pageTitle" => "View Furniture"
+            "pageTitle" => "View Furniture",
+            'items' => Item::paginate(4)
         ]);
     }
 
@@ -33,9 +36,9 @@ class UserController extends Controller
         ]);
     }
 
-    public function updatePage()
+    public function updateProfilePage()
     {
-        return view('user.update', [
+        return view('user.updateProfile', [
             "pageTitle" => "Update Profile"
         ]);
     }
@@ -65,5 +68,22 @@ class UserController extends Controller
         $user->save();
 
         return redirect('/user/profile')->with('updateMessage', 'Your data has been updated!');
+    }
+
+    public function search(Request $request)
+    {
+        $item = Item::where('name', 'like', '%' . $request->searchQuery . '%')->get();
+        return view('user.view', [
+            "pageTitle" => "View Furniture",
+            "items" => $item
+        ]);
+    }
+
+    public function itemDetail(Item $item)
+    {
+        return view('user.detail', [
+            "pageTitle" => $item->name,
+            "item" => $item
+        ]);
     }
 }
