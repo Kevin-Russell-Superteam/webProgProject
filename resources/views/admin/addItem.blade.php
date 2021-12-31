@@ -1,4 +1,4 @@
-@extends('layouts.guest')
+@extends('layouts.admin')
 @section('container')
 
 <div class="wrapper-register">
@@ -10,8 +10,8 @@
 
         <div class="mb-3">
             <label for="ItemName" class="form-label">Name</label>
-            <input type="text" class="form-control  @error('ItemName') is-invalid @enderror" id="ItemName" name="ItemName"
-                value="{{ old('name') }}">
+            <input type="text" class="form-control  @error('ItemName') is-invalid @enderror" id="ItemName"
+                name="ItemName" value="{{ old('name') }}">
             @error('ItemName')
             <div class="invalid-feedback">
                 {{ $message }}
@@ -21,8 +21,8 @@
 
         <div class="mb-3">
             <label for="ItemPrice" class="form-label">Price</label>
-            <input type="text" class="form-control @error('ItemPrice') is-invalid @enderror" id="ItemPrice" name="ItemPrice"
-                value="{{ old('email') }}">
+            <input type="text" class="form-control @error('ItemPrice') is-invalid @enderror" id="ItemPrice"
+                name="ItemPrice" value="{{ old('email') }}">
             @error('ItemPrice')
             <div class="invalid-feedback">
                 {{ $message }}
@@ -69,8 +69,8 @@
 
             <input type="file" id="ItemImage" class="form-control" name="ItemImage">
 
-            {{-- <input class="form-check-input @error('gender') is-invalid @enderror" type="radio" name="gender" id="gender"
-                value="Male">
+            {{-- <input class="form-check-input @error('gender') is-invalid @enderror" type="radio" name="gender"
+                id="gender" value="Male">
             <label class="form-check-label pe-3" for="gender">Male</label> --}}
 
             {{-- @error('gender')
@@ -78,7 +78,7 @@
                 {{ $message }}
             </div>
             @enderror --}}
-        </div> 
+        </div>
 
         <button type="submit" class="btn btn-primary w-100">Add Furniture</button>
     </form>

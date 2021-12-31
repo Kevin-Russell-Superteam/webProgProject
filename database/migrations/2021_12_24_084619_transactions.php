@@ -13,10 +13,10 @@ class Transactions extends Migration
      */
     public function up()
     {
-        Schema::create('transactions', function(Blueprint $table){
-            $table->bigIncrements('transactionsID');
-            $table->foreignId('itemsID');
-            $table->foreign('itemsID')->references('itemsID')->on('items');
+        Schema::create('transactions', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->foreignId('itemID');
+            $table->foreign('itemID')->references('id')->on('items');
             $table->date('transactionDate');
             $table->string('transactionMethod', 100);
             $table->string('cardNumber')->default("None");

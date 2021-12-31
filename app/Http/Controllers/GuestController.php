@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Models\Item;
 
 class GuestController extends Controller
@@ -10,16 +10,16 @@ class GuestController extends Controller
     public function index()
     {
         return view('guesthome', [
-            'pageTitle' => "Home"
+            'pageTitle' => "Home",
+            'items' => Item::paginate(4)
         ]);
     }
 
     public function view()
     {
-        $Item = Item::all();
         return view('view', [
             'pageTitle' => "View Furniture",
-            'items' => $Item
+            'items' => Item::paginate(4)
         ]);
     }
 }

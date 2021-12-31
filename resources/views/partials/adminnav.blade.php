@@ -14,7 +14,7 @@
           <a class="nav-link" href="{{ '/admin/view' }}">View Furniture</a>
         </li>
         <li class="nav-item me-3">
-          <a class="nav-link" href="{{ '/admin/add' }}">Add Furniture</a>
+          <a class="nav-link" href="{{ '/admin/addItem' }}">Add Furniture</a>
         </li>
         <li class="nav-item me-3">
           <a class="nav-link" href="{{ '/admin/profile' }}">Profile</a>
