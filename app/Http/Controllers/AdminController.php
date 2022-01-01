@@ -77,22 +77,30 @@ class AdminController extends Controller
 
     public function addItem(Request $request)
     {
-        $storeImage = $request->file('ItemImage');
+        $item = new Item();
 
-        $ImageName = $storeImage->getClientOriginalName();
-        Storage::putFileAs('public/images', $storeImage, $ImageName);
-        $ImageName = 'images/' . $ImageName;
+        Validator::make($request->all(), [
+            'name' => ['required', 'unique:items', 'max:15'],
+            'price' => ['required', 'numeric', 'min:5000', 'max:10000000'],
+            'type' => ['required'],
+            'color' => ['required'],
+            'image' => ['required', 'mimes:jpeg,png,jpg']
+        ])->validate();
 
-        $newItem = new Item();
-        $newItem->name = $request->ItemName;
-        $newItem->price = $request->ItemPrice;
-        $newItem->type = $request->ItemType;
-        $newItem->color = $request->ItemColor;
-        $newItem->image = $ImageName;
+        $storeImage = $request->file('image');
+        $image = $storeImage->getClientOriginalName();
+        Storage::putFileAs('public/images', $storeImage, $image);
+        $image = 'images/' . $image;
 
-        $newItem->save();
+        $item->name = $request->name;
+        $item->price = $request->price;
+        $item->type = $request->type;
+        $item->color = $request->color;
+        $item->image = $image;
 
-        return 'Furniture Succesfully Added!';
+        $item->save();
+
+        return redirect()->back()->with('addMessage', 'Item has been added!');
     }
 
     public function search(Request $request)
@@ -110,5 +118,20 @@ class AdminController extends Controller
             "pageTitle" => $item->name,
             "item" => $item
         ]);
+    }
+
+    public function updateItemPage(Item $item)
+    {
+        return view('admin.updateitem', [
+            'pageTitle' => "Update Item",
+            'item' => $item
+        ]);
+
+        return redirect()->back()->with('updateItem', 'Item has been updated!');
+    }
+
+    public function updateItem()
+    {
+        //nanti isi ini bre buat update
     }
 }

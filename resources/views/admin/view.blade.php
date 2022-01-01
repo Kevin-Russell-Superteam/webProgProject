@@ -1,4 +1,4 @@
-@extends('layouts.guest')
+@extends('layouts.admin')
 @section('container')
 
 <section id="products">
@@ -14,18 +14,25 @@
       </form>
     </div>
 
+    @if (session()->has('updateItem'))
+    <div class="m-auto text-center alert alert-success alert-dismissible fade show mb-3" role="alert">
+      {{ session('updateItem') }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
+
     <div class="row justify-content-start">
       @foreach ($items as $item)
       <div class="col-md-3 mb-3">
         <div class="card">
-          <img src="{{Storage::url($item->image)}}" class="card-img-top" alt="product1" width="259" height="259">
+          <a href="/admin/{{ $item->id }}">
+            <img src="{{Storage::url($item->image)}}" class="card-img-top" alt="product1" width="259" height="259">
+          </a>
           <div class="card-body">
-            <a href="/admin/{{ $item->id }}">
-              <h2 class="card-title">{{$item->name}}</h2>
-            </a>
+            <h2 class="card-title">{{$item->name}}</h2>
             <p class="card-text fs-5">Rp. {{$item->price}}</p>
             <div class="d-flex justify-content-around">
-              <button type="submit" class="btn btn-primary w-auto">Update</button>
+              <a href="/admin/{{ $item->id }}/update" class="btn btn-primary w-auto">Update</a>
               <button type="submit" class="btn btn-danger w-auto">Delete</button>
             </div>
           </div>

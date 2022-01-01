@@ -20,7 +20,9 @@
       @foreach ($items as $item)
       <div class="col-md-3 mb-3">
         <div class="card">
-          <img src="{{Storage::url($item->image)}}" class="card-img-top" alt="product1" width="259" height="259">
+          <a href="/{{ $item->id }}">
+            <img src="{{Storage::url($item->image)}}" class="card-img-top" alt="product1" width="259" height="259">
+          </a>
           <div class="card-body">
             <h2 class="card-title">{{$item->name}}</h2>
             <p class="card-text fs-5">Rp. {{$item->price}}</p>

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Item;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class GuestController extends Controller
 {
@@ -20,6 +21,23 @@ class GuestController extends Controller
         return view('view', [
             'pageTitle' => "View Furniture",
             'items' => Item::paginate(4)
+        ]);
+    }
+
+    public function detail(Item $item)
+    {
+        return view('detail', [
+            'pageTitle' => $item->name,
+            'item' => $item
+        ]);
+    }
+
+    public function search(Request $request)
+    {
+        $item = Item::where('name', 'like', '%' . $request->searchQuery . '%')->get();
+        return view('view', [
+            "pageTitle" => "View Furniture",
+            "items" => $item
         ]);
     }
 }

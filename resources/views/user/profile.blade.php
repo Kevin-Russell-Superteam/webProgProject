@@ -1,6 +1,6 @@
 @extends('layouts.user')
-@section('container')
 
+@section('container')
 <section id="products">
   <div class="container">
     @if (session()->has('updateMessage'))
