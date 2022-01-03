@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use App\Models\Item;
 use Illuminate\support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
@@ -105,7 +106,7 @@ class AdminController extends Controller
 
     public function search(Request $request)
     {
-        $item = Item::where('name', 'like', '%' . $request->searchQuery . '%')->get();
+        $item = Item::where('name', 'like', '%' . $request->searchQuery  . '%')->get();
         return view('admin.view', [
             "pageTitle" => "View Furniture",
             "items" => $item
@@ -126,12 +127,44 @@ class AdminController extends Controller
             'pageTitle' => "Update Item",
             'item' => $item
         ]);
-
-        return redirect()->back()->with('updateItem', 'Item has been updated!');
     }
 
-    public function updateItem()
+    public function updateItem(Request $request, Item $item)
     {
-        //nanti isi ini bre buat update
+        $storeImage = $request->file('image');
+        // $itemID = Item::find($item->id);
+        
+        if($item->name  != null || $item->price != null || $item->type != null || $item->color != null){
+            $item->name = $request->name;
+            $item->price = $request->price;
+            $item->type = $request->type;
+            $item->color = $request->color;
+        } else {
+            $item->name;
+            $item->price;
+            $item->type;
+            $item->color;
+        }
+
+        if($storeImage != NULL){
+            $image = $storeImage->getClientOriginalName();
+            Storage::putFileAs('public/images', $storeImage, $image);
+            $image = 'images/' . $image;
+            $item->image = $image;
+        } else {
+            $item->image = $item->image;
+        }
+
+        $item->save();
+        return redirect()->back()->with('updateMessage', 'Item has been Update!');
+    }
+
+    public function deleteItem(Item $item){
+        if(isset($item)){
+            Storage::delete('public/images'.$item->image);
+            $item->delete();
+        }
+
+        return redirect('/admin')->with('deleteMessage', 'Item Has Been Deleted');
     }
 }

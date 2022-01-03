@@ -51,5 +51,8 @@ Route::post('/admin/view/search', [AdminController::class, 'search']);
 Route::get('/{item}', [GuestController::class, 'detail']);
 Route::get('/user/{item}', [UserController::class, 'itemDetail'])->middleware('auth');
 Route::get('/admin/{item}', [AdminController::class, 'itemDetail'])->middleware('admin');
+
 Route::get('/admin/{item}/update', [AdminController::class, 'updateItemPage'])->middleware('admin');
 Route::post('/admin/{item}/update', [AdminController::class, 'updateItem']);
+
+Route::delete('/admin/{item}/delete', [AdminController::class, 'deleteItem']);
