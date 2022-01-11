@@ -9,11 +9,13 @@ class Transaction extends Model
 {
     use HasFactory;
 
-    public function users(){
-        return $this->belongsTo(User::class);
+    public function users()
+    {
+        return $this->belongsTo(User::class, "id", "userID");
     }
 
-    public function transactionDetails(){
-        return $this->hasMany(TransactionDetail::class);
+    public function transactionDetails()
+    {
+        return $this->hasMany(TransactionDetail::class, "transactionID", "id");
     }
 }

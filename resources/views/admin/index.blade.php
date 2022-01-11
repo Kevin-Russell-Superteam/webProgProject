@@ -9,7 +9,7 @@
 
 <section id="products">
   <div class="container">
-    <h2>Best Sellers</h2>
+    <h2 class="mb-3">Welcome {{ Auth::user()->role }}, to JHFurniture</h2>
     @if (session()->has('updateItem'))
     <div class="m-auto text-center alert alert-success alert-dismissible fade show mb-3" role="alert">
       {{ session('updateItem') }}
@@ -25,7 +25,7 @@
           </a>
           <div class="card-body">
             <h2 class="card-title">{{$item->name}}</h2>
-            <p class="card-text fs-5">Rp. {{$item->price}}</p>
+            <p class="card-text fs-5">Rp. {{number_format($item->price, 0, '.', '.')}}</p>
             <div class="d-flex justify-content-around">
               <a href="/admin/{{ $item->id }}/update" class="btn btn-primary w-auto">Update</a>
               <button type="submit" class="btn btn-danger w-auto">Delete</button>

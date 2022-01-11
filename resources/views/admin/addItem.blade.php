@@ -29,7 +29,7 @@
         <div class="mb-3">
             <label for="price" class="form-label">Price</label>
             <input type="text" class="form-control @error('price') is-invalid @enderror" id="price" name="price"
-                value="{{ old('email') }}">
+                value="{{ old('price') }}">
             @error('price')
             <div class="invalid-feedback">
                 {{ $message }}
@@ -39,7 +39,7 @@
 
         <div class="mb-3">
             <label for="type" class="form-label">Type</label>
-            <select name="type" id="type" class="form-control @error('type') is-invalid @enderror">
+            <select name="type" id="type" class="form-select @error('type') is-invalid @enderror">
                 <option value="Bed">Bed</option>
                 <option value="Wardrobe">Wardrobe</option>
                 <option value="Sofa">Sofa</option>
@@ -54,8 +54,8 @@
         </div>
 
         <div class="mb-3">
-            <label for="color" class="form-label @error('color') is-invalid @enderror">Color</label>
-            <select name="color" id="color" class="form-control">
+            <label for="color" class="form-label">Color</label>
+            <select name="color" id="color" class="form-select @error('color') is-invalid @enderror">
                 <option value="White">White</option>
                 <option value="Black">Black</option>
                 <option value="Navy">Blue Navy</option>

@@ -25,7 +25,7 @@
           </a>
           <div class="card-body">
             <h2 class="card-title">{{$item->name}}</h2>
-            <p class="card-text fs-5">Rp. {{$item->price}}</p>
+            <p class="card-text fs-5">Rp. {{number_format($item->price, 0, '.', '.')}}</p>
             <button type="submit" class="btn btn-primary w-100">Add to Cart</button>
           </div>
         </div>

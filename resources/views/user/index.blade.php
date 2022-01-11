@@ -9,7 +9,13 @@
 
 <section id="products">
   <div class="container">
-    <h2>Best Sellers</h2>
+    @if (session()->has('itemAddedMessage'))
+    <div class="m-auto text-center alert alert-success alert-dismissible fade show mb-3" role="alert">
+      {{ session('itemAddedMessage') }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
+    <h2 class="mb-3">Welcome {{ Auth::user()->name }}, to JHFurniture</h2>
     <div class="row justify-content-between">
       @foreach ($items as $item)
       <div class="col-md-3 mb-3">
@@ -19,8 +25,11 @@
           </a>
           <div class="card-body">
             <h2 class="card-title">{{$item->name}}</h2>
-            <p class="card-text fs-5">Rp. {{$item->price}}</p>
-            <button type="submit" class="btn btn-primary w-100">Add to Cart</button>
+            <p class="card-text fs-5">Rp. {{number_format($item->price, 0, '.', '.')}}</p>
+            <form action="/user/{{ $item->id }}" method="POST">
+              @csrf
+              <button type="submit" class="btn btn-primary w-100">Add to Cart</button>
+            </form>
           </div>
         </div>
       </div>

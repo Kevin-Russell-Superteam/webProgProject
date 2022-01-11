@@ -9,11 +9,14 @@
     </div>
     <div class="item-description ms-2 mt-5">
       <h4 class="pb-3">Name: {{ $item->name }}</h4>
-      <h4 class="pb-3">Price: Rp. {{ $item->price }}</h4>
+      <h4 class="pb-3">Price: Rp. {{number_format($item->price, 0, '.', '.')}}</h4>
       <h4 class="pb-3">Furniture Type: {{ $item->type }}</h4>
       <h4 class="pb-3">Color: {{ $item->color }}</h4>
       <a href="{{ url()->previous() }}" class="btn btn-secondary w-auto me-3">Previous</a>
-      <button type="submit" class="btn btn-primary w-auto">Add to Cart</button>
+      <form action="/user/detail/{{ $item->id }}" method="POST">
+        @csrf
+        <button type="submit" class="btn btn-primary w-100">Add to Cart</button>
+      </form>
     </div>
   </div>
 </div>

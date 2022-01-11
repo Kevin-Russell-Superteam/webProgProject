@@ -105,10 +105,11 @@ class AdminController extends Controller
 
     public function search(Request $request)
     {
-        $item = Item::where('name', 'like', '%' . $request->searchQuery . '%')->get();
+        $items = Item::where('name', 'like', '%' . $request->searchQuery . '%')->paginate(4);
+        $items->appends(['searchQuery' => $request->searchQuery]);
         return view('admin.view', [
             "pageTitle" => "View Furniture",
-            "items" => $item
+            "items" => $items
         ]);
     }
 

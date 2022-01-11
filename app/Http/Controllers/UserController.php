@@ -6,9 +6,14 @@ use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
+use App\Models\Transaction;
+use App\Models\TransactionDetail;
 use Illuminate\Foundation\Auth\User;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -72,10 +77,11 @@ class UserController extends Controller
 
     public function search(Request $request)
     {
-        $item = Item::where('name', 'like', '%' . $request->searchQuery . '%')->get();
+        $items = Item::where('name', 'like', '%' . $request->searchQuery . '%')->paginate(4);
+        $items->appends(['searchQuery' => $request->searchQuery]);
         return view('user.view', [
             "pageTitle" => "View Furniture",
-            "items" => $item
+            "items" => $items
         ]);
     }
 
@@ -85,5 +91,101 @@ class UserController extends Controller
             "pageTitle" => $item->name,
             "item" => $item
         ]);
+    }
+
+    public function cartPage()
+    {
+        return view('user.cart', [
+            'pageTitle' => 'Cart'
+        ]);
+    }
+
+    public function checkOutPage()
+    {
+        return view('user.checkout', [
+            'pageTitle' => "Checkout"
+        ]);
+    }
+
+    public function addToCart(Item $item)
+    {
+        $cart = Session::get('cart');
+        $i = 0;
+        $present = false;
+
+        if ($cart === null) {
+            $cart = [
+                'userID' => Auth::user()->id,
+                'itemID' => $item->id,
+                'name' => $item->name,
+                'quantity' => 1,
+                'image' => $item->image,
+                'price' => $item->price
+            ];
+            $i++;
+            Session::push('cart', $cart);
+        } else {
+            for ($i = 0; $i < count($cart); $i++) {
+                if ($cart[$i]['itemID'] === $item->id) {
+                    $cart[$i]['quantity']++;
+                    Session::put('cart', $cart);
+                    Session::save();
+                    $present = true;
+                }
+            }
+            if (!$present) {
+                $cart = [
+                    'userID' => Auth::user()->id,
+                    'itemID' => $item->id,
+                    'name' => $item->name,
+                    'quantity' => 1,
+                    'image' => $item->image,
+                    'price' => $item->price
+                ];
+                $i++;
+                Session::push('cart', $cart);
+            }
+        }
+        return redirect()->back()->with('itemAddedMessage', 'Item has been added to your cart!');
+    }
+
+    public function addQty($id)
+    {
+        $cart = Session::get('cart');
+
+        $cart[$id]['quantity']++;
+
+        Session::put('cart', $cart);
+        Session::save();
+
+        return redirect()->back();
+    }
+
+    public function minQty($id)
+    {
+        $cart = Session::get('cart');
+
+        if ($cart[$id]['quantity'] === 1) {
+            unset($cart[$id]);
+        } else {
+            $cart[$id]['quantity']--;
+        }
+
+        Session::put('cart', $cart);
+        Session::save();
+
+        return redirect()->back();
+    }
+
+    public function checkOut(Request $request)
+    {
+        dd($request->all());
+        $transaction = new Transaction();
+        $detail = new TransactionDetail();
+
+        Validator::make($request->all(), [
+            'payment' => 'required',
+            'cardNumber' => ['required', 'numeric', 'digits:16']
+        ])->validate();
     }
 }

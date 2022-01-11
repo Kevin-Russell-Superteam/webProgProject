@@ -15,8 +15,8 @@ class Transactions extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->foreignId('itemID');
-            $table->foreign('itemID')->references('id')->on('items');
+            $table->foreignId('userID')->references('id')->on('users');
+            // $table->foreign('userID');
             $table->date('transactionDate');
             $table->string('transactionMethod', 100);
             $table->string('cardNumber')->default("None");
