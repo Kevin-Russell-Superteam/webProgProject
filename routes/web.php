@@ -69,6 +69,9 @@ Route::post('/user/cart/{item}/minQty', [UserController::class, 'minQty']);
 
 //Admin
 Route::get('/admin/{item}', [AdminController::class, 'itemDetail'])->middleware('admin');
+
 Route::get('/admin/{item}/update', [AdminController::class, 'updateItemPage'])->middleware('admin');
 
 Route::post('/admin/{item}/update', [AdminController::class, 'updateItem']);
+
+Route::delete('/admin/{item}/delete', [AdminController::class, 'deleteItem']);

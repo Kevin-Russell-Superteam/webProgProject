@@ -33,7 +33,13 @@
             <p class="card-text fs-5">Rp. {{number_format($item->price, 0, '.', '.')}}</p>
             <div class="d-flex justify-content-around">
               <a href="/admin/{{ $item->id }}/update" class="btn btn-primary w-auto">Update</a>
-              <button type="submit" class="btn btn-danger w-auto">Delete</button>
+
+              <form action="/admin/{{$item->id}}/delete" method="POST">
+                {{method_field('DELETE')}}
+                @csrf
+                <button type="submit" class="btn btn-danger w-auto">Delete</button>
+              </form>
+
             </div>
           </div>
         </div>
