@@ -1,6 +1,6 @@
 @extends('layouts.admin')
-@section('container')
 
+@section('container')
 <section id="products">
   <div class="container">
     @if (session()->has('updateMessage'))
@@ -9,6 +9,7 @@
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     @endif
+
     <h2 class="text-center mb-5">Admin's Profile</h2>
     <div class="row d-flex justify-content-center my-3">
       <div class="col-2">
@@ -42,7 +43,7 @@
         </form>
       </div>
       <div class="col">
-        <a href="#" class="btn btn-primary">View All User's Transaction</a>
+        <a href="{{ '/admin/profile/history' }}" class="btn btn-primary">View All User Transactions</a>
       </div>
       <div class="col">
         <a href="{{ '/admin/profile/update' }}" class="btn btn-primary ">Update Profile</a>

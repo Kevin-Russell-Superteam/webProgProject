@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Item;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use App\Http\Controllers\Controller;
-use App\Models\Cart;
-use App\Models\Transaction;
 use App\Models\TransactionDetail;
+use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\User;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
@@ -55,7 +54,7 @@ class UserController extends Controller
         $user = User::find($id);
 
         Validator::make($request->all(), [
-            'name' => ['required', 'regex:/^[a-zA-Z\s]*$/', Rule::unique('users')->ignore($user->id)],
+            'name' => ['required', 'regex:/^[a-zA-Z\s]*$/', 'max:15', Rule::unique('users')->ignore($user->id)],
             'email' => ['required', 'email:dns', Rule::unique('users')->ignore($user->id)],
             'password' => ['required', 'min:5', 'max:20'],
             'address' => ['required', 'min:5', 'max:95'],
@@ -179,13 +178,44 @@ class UserController extends Controller
 
     public function checkOut(Request $request)
     {
-        dd($request->all());
         $transaction = new Transaction();
-        $detail = new TransactionDetail();
 
         Validator::make($request->all(), [
             'payment' => 'required',
             'cardNumber' => ['required', 'numeric', 'digits:16']
         ])->validate();
+
+        $cart = Session::get('cart');
+
+        $transaction->user_id = Auth::user()->id;
+        $transaction->transactionDate = Carbon::now()->toDateTimeString();
+        $transaction->transactionMethod = $request->payment;
+        $transaction->cardNumber = $request->cardNumber;
+        $transaction->save();
+
+        for ($i = 0; $i < count($cart); $i++) {
+            $detail = new TransactionDetail();
+            $detail->transaction_id = $transaction->id;
+            $detail->item_id = $cart[$i]['itemID'];
+            $detail->quantity = $cart[$i]['quantity'];
+            $detail->save();
+        }
+
+        Session::forget('cart');
+
+        return redirect('/user')->with('checkOutSuccess', 'Thank you for shopping with us! Your transaction has been confirmed!');
+    }
+
+    public function history()
+    {
+        $transactions = Transaction::where('user_id', '=', Auth::user()->id)
+            ->with('transactionDetails')
+            ->get();
+
+        return view('user.history', [
+            'pageTitle' => "Transaction History",
+            'transactions' => $transactions,
+            'items' => Item::all()
+        ]);
     }
 }

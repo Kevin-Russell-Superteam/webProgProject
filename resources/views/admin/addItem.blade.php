@@ -80,5 +80,4 @@
         <button type="submit" class="btn btn-primary w-100">Add Furniture</button>
     </form>
 </div>
-
 @endsection

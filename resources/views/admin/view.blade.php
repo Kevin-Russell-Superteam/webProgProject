@@ -1,6 +1,6 @@
 @extends('layouts.admin')
-@section('container')
 
+@section('container')
 <section id="products">
   <div class="container">
     <h2 class="text-center mb-5">{{ $pageTitle }}</h2>
@@ -12,13 +12,6 @@
         <button class="btn btn-primary" type="submit">Search</button>
       </form>
     </div>
-
-    @if (session()->has('updateItem'))
-    <div class="m-auto text-center alert alert-success alert-dismissible fade show mb-3" role="alert">
-      {{ session('updateItem') }}
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    @endif
 
     @if (count($items))
     <div class="row justify-content-start">
@@ -54,10 +47,5 @@
     <h2>There are no items</h2>
     @endif
   </div>
-
-</section>
-
-
-
 </section>
 @endsection

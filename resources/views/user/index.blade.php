@@ -15,6 +15,14 @@
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     @endif
+
+    @if (session()->has('checkOutSuccess'))
+    <div class="m-auto text-center alert alert-success alert-dismissible fade show mb-3" role="alert">
+      {{ session('checkOutSuccess') }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
+
     <h2 class="mb-3">Welcome {{ Auth::user()->name }}, to JHFurniture</h2>
     <div class="row justify-content-between">
       @foreach ($items as $item)

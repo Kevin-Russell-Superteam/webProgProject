@@ -15,6 +15,7 @@
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     @endif
+
     <h2>Best Sellers</h2>
     <div class="row justify-content-start mt-3">
       @foreach ($items as $item)
@@ -26,17 +27,15 @@
           <div class="card-body">
             <h2 class="card-title">{{$item->name}}</h2>
             <p class="card-text fs-5">Rp. {{number_format($item->price, 0, '.', '.')}}</p>
-            <button type="submit" class="btn btn-primary w-100">Add to Cart</button>
+            <form action="/user/{{ $item->id }}" method="POST">
+              @csrf
+              <button type="submit" class="btn btn-primary w-100">Add to Cart</button>
+            </form>
           </div>
         </div>
       </div>
       @endforeach
     </div>
   </div>
-
-</section>
-
-
-
 </section>
 @endsection

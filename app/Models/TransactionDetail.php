@@ -9,13 +9,17 @@ class TransactionDetail extends Model
 {
     use HasFactory;
 
-    public function items()
-    {
-        return $this->belongsTo(Item::class, "id", "itemID");
-    }
+    protected $table = 'transactionDetails';
+
+    public $timestamps = false;
 
     public function transactions()
     {
-        return $this->belongsTo(Transaction::class, "id", "transactionID");
+        return $this->belongsTo(Transaction::class);
+    }
+
+    public function items()
+    {
+        return $this->belongsTo(Item::class);
     }
 }

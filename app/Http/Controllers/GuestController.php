@@ -42,5 +42,3 @@ class GuestController extends Controller
         ]);
     }
 }
-
-// Antara pake ItemController atau nanti bikin Guest Controller

@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use App\Models\Transaction;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\support\Facades\Storage;
@@ -52,7 +52,7 @@ class AdminController extends Controller
         $user = User::find($id);
 
         Validator::make($request->all(), [
-            'name' => ['required', 'regex:/^[a-zA-Z\s]*$/', Rule::unique('users')->ignore($user->id)],
+            'name' => ['required', 'regex:/^[a-zA-Z\s]*$/', 'max:15', Rule::unique('users')->ignore($user->id)],
             'email' => ['required', 'email:dns', Rule::unique('users')->ignore($user->id)],
             'password' => ['required', 'min:5', 'max:20']
         ])->validate();
@@ -100,7 +100,6 @@ class AdminController extends Controller
         $item->image = $image;
 
         $item->save();
-
         return redirect()->back()->with('addMessage', 'Item has been added!');
     }
 
@@ -132,6 +131,14 @@ class AdminController extends Controller
 
     public function updateItem(Request $request, Item $item)
     {
+        Validator::make($request->all(), [
+            'name' => ['required', 'max:15', Rule::unique('items')->ignore($item->id)],
+            'price' => ['required', 'numeric', 'min:5000', 'max:10000000'],
+            'type' => ['required'],
+            'color' => ['required'],
+            'image' => ['mimes:jpeg,png,jpg']
+        ])->validate();
+
         $storeImage = $request->file('image');
         // $itemID = Item::find($item->id);
 
@@ -157,7 +164,7 @@ class AdminController extends Controller
         }
 
         $item->save();
-        return redirect()->back()->with('updateMessage', 'Item has been Update!');
+        return redirect('/admin')->with('updateItem', 'Item has been updated!');
     }
 
     public function deleteItem(Item $item)
@@ -167,6 +174,19 @@ class AdminController extends Controller
             $item->delete();
         }
 
-        return redirect('/admin')->with('deleteMessage', 'Item Has Been Deleted');
+        return redirect('/admin')->with('deleteMessage', 'Item has been deleted');
+    }
+
+    public function history()
+    {
+        $transactions = Transaction::with('transactionDetails')->get();
+        $users = User::with('transactions')->get();
+
+        return view('admin.history', [
+            'pageTitle' => "Transaction History",
+            'transactions' => $transactions,
+            'items' => Item::all(),
+            'users' => $users
+        ]);
     }
 }

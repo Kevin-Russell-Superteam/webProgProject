@@ -23,18 +23,16 @@
       @csrf
       <button class="btn btn-primary col-1 w-100"><i class="bi bi-plus"></i></button>
     </form>
-
   </div>
-
   <?php $i++?>
   @endforeach
+
   <h3 class="d-flex justify-content-end">Total Price:</h3>
   <h3 class="d-flex justify-content-end">Rp. {{number_format($total, 0, '.', '.')}}</h3>
 
   <div class="d-flex justify-content-end">
     <a href="/user/checkout" class="btn btn-primary w-auto">Proceed to Checkout</a>
   </div>
-
 </div>
 
 @else
@@ -42,5 +40,4 @@
   <h2>You have nothing in your cart!</h2>
 </div>
 @endif
-
 @endsection

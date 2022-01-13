@@ -38,13 +38,6 @@ class RegisterController extends Controller
 
         $user->save();
 
-        return redirect('/login')->with('message', 'Registration successful!');
+        return redirect('/login')->with('registrationMessage', 'Registration successful!');
     }
 }
-
-// Full Name	Must be filled, unique and consist of letter and space only
-// Email	Must be filled with email validation and unique
-// Password	Must be filled and characters length must be between 5 and 20
-// Address	Must be filled and characters length must be between 5 and 95
-// Gender	Must be selected
-// regex:/^[a-zA-Z\s]*$/

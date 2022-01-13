@@ -4,15 +4,8 @@
 <div class="wrapper-register">
   <div class="mb-3 sub-heading">
     <h1>Update Furniture</h1>
-    
   </div>
 
-  @if (session()->has('updateMessage'))
-        <div class="m-auto text-center alert alert-success alert-dismissible fade show mb-3" role="alert">
-            {{ session('updateMessage') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        @endif
   <form enctype="multipart/form-data" action="/admin/{{$item->id}}/update" method="POST">
     @csrf
     <div class="mb-3">
@@ -80,5 +73,4 @@
     <button type="submit" class="btn btn-primary w-100">Update Furniture</button>
   </form>
 </div>
-
 @endsection

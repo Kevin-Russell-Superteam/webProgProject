@@ -1,6 +1,6 @@
 @extends('layouts.guest')
-@section('container')
 
+@section('container')
 <section id="products">
   <div class="container">
     <h2 class="text-center mb-5">{{ $pageTitle }}</h2>
@@ -24,7 +24,10 @@
           <div class="card-body">
             <h2 class="card-title">{{$item->name}}</h2>
             <p class="card-text fs-5">Rp. {{number_format($item->price, 0, '.', '.')}}</p>
-            <button type="submit" class="btn btn-primary w-100">Add to Cart</button>
+            <form action="/user/{{ $item->id }}" method="POST">
+              @csrf
+              <button type="submit" class="btn btn-primary w-100">Add to Cart</button>
+            </form>
           </div>
         </div>
       </div>
@@ -33,15 +36,9 @@
     <div class="d-flex justify-content-end">
       {{ $items->links() }}
     </div>
-
     @else
     <h2>There are no items</h2>
     @endif
   </div>
-
-</section>
-
-
-
 </section>
 @endsection

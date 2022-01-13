@@ -13,9 +13,9 @@
       </form>
     </div>
 
-    @if (session()->has('cartMessage'))
+    @if (session()->has('itemAddedMessage'))
     <div class="m-auto text-center alert alert-success alert-dismissible fade show mb-3" role="alert">
-      {{ session('cartMessage') }}
+      {{ session('itemAddedMessage') }}
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     @endif
@@ -49,10 +49,5 @@
     <h2>There are no items</h2>
     @endif
   </div>
-
-</section>
-
-
-
 </section>
 @endsection
